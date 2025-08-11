@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<!-- saved from url=(0036)https://youssef-jo1.github.io/Quran/ -->
+<html lang="ar" dir="rtl" data-theme="dark"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المصحف الإلكتروني - لحفظ القرآن الكريم بسهولة</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --primary-color: #43a047;
+            --secondary-color: #e8f5e9;
+            --border-color: #c8e6c9;
+            --header-bg: #43a047;
+            --header-text: #ffffff;
+            --surah-bg: #f1f8e9;
+            --ayah-hover: #e8f5e9;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --primary-color: #4caf50;
+            --secondary-color: #1e3320;
+            --border-color: #2e7d32;
+            --header-bg: #1b5e20;
+            --header-text: #ffffff;
+            --surah-bg: #1e3320;
+            --ayah-hover: #2e3b2e;
+            --shadow-color: rgba(0, 0, 0, 0.3);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Traditional Arabic', 'Amiri', 'Scheherazade New', serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background-color: var(--header-bg);
+            color: var(--header-text);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch label {
+            margin-left: 8px;
+            cursor: pointer;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .search-container {
+            margin: 1rem 0;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .search-container input {
+            flex: 1;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: inherit;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .search-container button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .search-container button:hover {
+            opacity: 0.9;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 1rem 0;
+            gap: 0.5rem;
+        }
+
+        .navigation select {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: inherit;
+        }
+
+        .quran-container {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--bg-color);
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+
+        .surah-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .surah-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .surah-info {
+            font-size: 1rem;
+            color: var(--text-color);
+            opacity: 0.8;
+        }
+
+        .bismillah {
+            text-align: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .ayat {
+            font-size: 1.5rem;
+            line-height: 2.5;
+            text-align: justify;
+            padding: 0 1rem;
+        }
+
+        .ayah {
+            position: relative;
+            display: inline;
+        }
+
+        .ayah:hover {
+            background-color: var(--ayah-hover);
+            border-radius: 4px;
+        }
+
+        .ayah-number {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-right: 0.25rem;
+            margin-left: 0.25rem;
+            font-weight: bold;
+        }
+
+        .page-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+        }
+
+        .page-navigation button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .page-navigation button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+
+        .page-info {
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        .surah-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .surah-card {
+            background-color: var(--surah-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid var(--border-color);
+        }
+
+        .surah-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 8px var(--shadow-color);
+        }
+
+        .surah-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .surah-card p {
+            font-size: 0.9rem;
+            color: var(--text-color);
+        }
+
+        .memorization-tools {
+            margin: 2rem 0;
+            padding: 1rem;
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .memorization-tools h2 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .tool-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tool-button {
+            padding: 0.5rem 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .tool-button:hover {
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-color);
+        }
+
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+
+            .ayat {
+                font-size: 1.3rem;
+                line-height: 2.2;
+            }
+
+            .surah-list {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .ayat {
+                font-size: 1.1rem;
+                line-height: 2;
+                padding: 0;
+            }
+
+            .surah-title {
+                font-size: 1.5rem;
+            }
+
+            .bismillah {
+                font-size: 1.2rem;
+            }
+
+            .surah-list {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">المصحف الإلكتروني</div>
+                <div class="controls">
+                    <div class="theme-switch">
+                        <label class="switch">
+                            <input type="checkbox" id="theme-toggle">
+                            <span class="slider"></span>
+                        </label>
+                        <label for="theme-toggle">الوضع الداكن</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="ابحث في القرآن الكريم...">
+            <button id="search-button">بحث</button>
+        </div>
+
+        <div class="navigation">
+            <select id="surah-select">
+                
+                <!-- سيتم ملؤها بالجافاسكريبت -->
+            <option value="1">1. الفاتحة</option><option value="2">2. البقرة</option><option value="3">3. آل عمران</option><option value="4">4. النساء</option><option value="5">5. المائدة</option><option value="6">6. الأنعام</option><option value="7">7. الأعراف</option><option value="8">8. الأنفال</option><option value="9">9. التوبة</option><option value="10">10. يونس</option><option value="11">11. هود</option><option value="12">12. يوسف</option><option value="13">13. الرعد</option><option value="14">14. إبراهيم</option><option value="15">15. الحجر</option><option value="16">16. النحل</option><option value="17">17. الإسراء</option><option value="18">18. الكهف</option><option value="19">19. مريم</option><option value="20">20. طه</option><option value="21">21. الأنبياء</option><option value="22">22. الحج</option><option value="23">23. المؤمنون</option><option value="24">24. النور</option><option value="25">25. الفرقان</option><option value="26">26. الشعراء</option><option value="27">27. النمل</option><option value="28">28. القصص</option><option value="29">29. العنكبوت</option><option value="30">30. الروم</option><option value="31">31. لقمان</option><option value="32">32. السجدة</option><option value="33">33. الأحزاب</option><option value="34">34. سبأ</option><option value="35">35. فاطر</option><option value="36">36. يس</option><option value="37">37. الصافات</option><option value="38">38. ص</option><option value="39">39. الزمر</option><option value="40">40. غافر</option><option value="41">41. فصلت</option><option value="42">42. الشورى</option><option value="43">43. الزخرف</option><option value="44">44. الدخان</option><option value="45">45. الجاثية</option><option value="46">46. الأحقاف</option><option value="47">47. محمد</option><option value="48">48. الفتح</option><option value="49">49. الحجرات</option><option value="50">50. ق</option><option value="51">51. الذاريات</option><option value="52">52. الطور</option><option value="53">53. النجم</option><option value="54">54. القمر</option><option value="55">55. الرحمن</option><option value="56">56. الواقعة</option><option value="57">57. الحديد</option><option value="58">58. المجادلة</option><option value="59">59. الحشر</option><option value="60">60. الممتحنة</option><option value="61">61. الصف</option><option value="62">62. الجمعة</option><option value="63">63. المنافقون</option><option value="64">64. التغابن</option><option value="65">65. الطلاق</option><option value="66">66. التحريم</option><option value="67">67. الملك</option><option value="68">68. القلم</option><option value="69">69. الحاقة</option><option value="70">70. المعارج</option><option value="71">71. نوح</option><option value="72">72. الجن</option><option value="73">73. المزمل</option><option value="74">74. المدثر</option><option value="75">75. القيامة</option><option value="76">76. الإنسان</option><option value="77">77. المرسلات</option><option value="78">78. النبأ</option><option value="79">79. النازعات</option><option value="80">80. عبس</option><option value="81">81. التكوير</option><option value="82">82. الانفطار</option><option value="83">83. المطففين</option><option value="84">84. الانشقاق</option><option value="85">85. البروج</option><option value="86">86. الطارق</option><option value="87">87. الأعلى</option><option value="88">88. الغاشية</option><option value="89">89. الفجر</option><option value="90">90. البلد</option><option value="91">91. الشمس</option><option value="92">92. الليل</option><option value="93">93. الضحى</option><option value="94">94. الشرح</option><option value="95">95. التين</option><option value="96">96. العلق</option><option value="97">97. القدر</option><option value="98">98. البينة</option><option value="99">99. الزلزلة</option><option value="100">100. العاديات</option><option value="101">101. القارعة</option><option value="102">102. التكاثر</option><option value="103">103. العصر</option><option value="104">104. الهمزة</option><option value="105">105. الفيل</option><option value="106">106. قريش</option><option value="107">107. الماعون</option><option value="108">108. الكوثر</option><option value="109">109. الكافرون</option><option value="110">110. النصر</option><option value="111">111. المسد</option><option value="112">112. الإخلاص</option><option value="113">113. الفلق</option><option value="114">114. الناس</option></select>
+
+            <select id="juz-select">
+                
+                <!-- سيتم ملؤها بالجافاسكريبت -->
+            <option value="1">الجزء 1</option><option value="2">الجزء 2</option><option value="3">الجزء 3</option><option value="4">الجزء 4</option><option value="5">الجزء 5</option><option value="6">الجزء 6</option><option value="7">الجزء 7</option><option value="8">الجزء 8</option><option value="9">الجزء 9</option><option value="10">الجزء 10</option><option value="11">الجزء 11</option><option value="12">الجزء 12</option><option value="13">الجزء 13</option><option value="14">الجزء 14</option><option value="15">الجزء 15</option><option value="16">الجزء 16</option><option value="17">الجزء 17</option><option value="18">الجزء 18</option><option value="19">الجزء 19</option><option value="20">الجزء 20</option><option value="21">الجزء 21</option><option value="22">الجزء 22</option><option value="23">الجزء 23</option><option value="24">الجزء 24</option><option value="25">الجزء 25</option><option value="26">الجزء 26</option><option value="27">الجزء 27</option><option value="28">الجزء 28</option><option value="29">الجزء 29</option><option value="30">الجزء 30</option></select>
+
+            <select id="page-select">
+                
+                <!-- سيتم ملؤها بالجافاسكريبت -->
+            <option value="1">صفحة 1</option><option value="2">صفحة 2</option><option value="3">صفحة 3</option><option value="4">صفحة 4</option><option value="5">صفحة 5</option><option value="6">صفحة 6</option><option value="7">صفحة 7</option><option value="8">صفحة 8</option><option value="9">صفحة 9</option><option value="10">صفحة 10</option><option value="11">صفحة 11</option><option value="12">صفحة 12</option><option value="13">صفحة 13</option><option value="14">صفحة 14</option><option value="15">صفحة 15</option><option value="16">صفحة 16</option><option value="17">صفحة 17</option><option value="18">صفحة 18</option><option value="19">صفحة 19</option><option value="20">صفحة 20</option><option value="21">صفحة 21</option><option value="22">صفحة 22</option><option value="23">صفحة 23</option><option value="24">صفحة 24</option><option value="25">صفحة 25</option><option value="26">صفحة 26</option><option value="27">صفحة 27</option><option value="28">صفحة 28</option><option value="29">صفحة 29</option><option value="30">صفحة 30</option><option value="31">صفحة 31</option><option value="32">صفحة 32</option><option value="33">صفحة 33</option><option value="34">صفحة 34</option><option value="35">صفحة 35</option><option value="36">صفحة 36</option><option value="37">صفحة 37</option><option value="38">صفحة 38</option><option value="39">صفحة 39</option><option value="40">صفحة 40</option><option value="41">صفحة 41</option><option value="42">صفحة 42</option><option value="43">صفحة 43</option><option value="44">صفحة 44</option><option value="45">صفحة 45</option><option value="46">صفحة 46</option><option value="47">صفحة 47</option><option value="48">صفحة 48</option><option value="49">صفحة 49</option><option value="50">صفحة 50</option><option value="51">صفحة 51</option><option value="52">صفحة 52</option><option value="53">صفحة 53</option><option value="54">صفحة 54</option><option value="55">صفحة 55</option><option value="56">صفحة 56</option><option value="57">صفحة 57</option><option value="58">صفحة 58</option><option value="59">صفحة 59</option><option value="60">صفحة 60</option><option value="61">صفحة 61</option><option value="62">صفحة 62</option><option value="63">صفحة 63</option><option value="64">صفحة 64</option><option value="65">صفحة 65</option><option value="66">صفحة 66</option><option value="67">صفحة 67</option><option value="68">صفحة 68</option><option value="69">صفحة 69</option><option value="70">صفحة 70</option><option value="71">صفحة 71</option><option value="72">صفحة 72</option><option value="73">صفحة 73</option><option value="74">صفحة 74</option><option value="75">صفحة 75</option><option value="76">صفحة 76</option><option value="77">صفحة 77</option><option value="78">صفحة 78</option><option value="79">صفحة 79</option><option value="80">صفحة 80</option><option value="81">صفحة 81</option><option value="82">صفحة 82</option><option value="83">صفحة 83</option><option value="84">صفحة 84</option><option value="85">صفحة 85</option><option value="86">صفحة 86</option><option value="87">صفحة 87</option><option value="88">صفحة 88</option><option value="89">صفحة 89</option><option value="90">صفحة 90</option><option value="91">صفحة 91</option><option value="92">صفحة 92</option><option value="93">صفحة 93</option><option value="94">صفحة 94</option><option value="95">صفحة 95</option><option value="96">صفحة 96</option><option value="97">صفحة 97</option><option value="98">صفحة 98</option><option value="99">صفحة 99</option><option value="100">صفحة 100</option><option value="101">صفحة 101</option><option value="102">صفحة 102</option><option value="103">صفحة 103</option><option value="104">صفحة 104</option><option value="105">صفحة 105</option><option value="106">صفحة 106</option><option value="107">صفحة 107</option><option value="108">صفحة 108</option><option value="109">صفحة 109</option><option value="110">صفحة 110</option><option value="111">صفحة 111</option><option value="112">صفحة 112</option><option value="113">صفحة 113</option><option value="114">صفحة 114</option><option value="115">صفحة 115</option><option value="116">صفحة 116</option><option value="117">صفحة 117</option><option value="118">صفحة 118</option><option value="119">صفحة 119</option><option value="120">صفحة 120</option><option value="121">صفحة 121</option><option value="122">صفحة 122</option><option value="123">صفحة 123</option><option value="124">صفحة 124</option><option value="125">صفحة 125</option><option value="126">صفحة 126</option><option value="127">صفحة 127</option><option value="128">صفحة 128</option><option value="129">صفحة 129</option><option value="130">صفحة 130</option><option value="131">صفحة 131</option><option value="132">صفحة 132</option><option value="133">صفحة 133</option><option value="134">صفحة 134</option><option value="135">صفحة 135</option><option value="136">صفحة 136</option><option value="137">صفحة 137</option><option value="138">صفحة 138</option><option value="139">صفحة 139</option><option value="140">صفحة 140</option><option value="141">صفحة 141</option><option value="142">صفحة 142</option><option value="143">صفحة 143</option><option value="144">صفحة 144</option><option value="145">صفحة 145</option><option value="146">صفحة 146</option><option value="147">صفحة 147</option><option value="148">صفحة 148</option><option value="149">صفحة 149</option><option value="150">صفحة 150</option><option value="151">صفحة 151</option><option value="152">صفحة 152</option><option value="153">صفحة 153</option><option value="154">صفحة 154</option><option value="155">صفحة 155</option><option value="156">صفحة 156</option><option value="157">صفحة 157</option><option value="158">صفحة 158</option><option value="159">صفحة 159</option><option value="160">صفحة 160</option><option value="161">صفحة 161</option><option value="162">صفحة 162</option><option value="163">صفحة 163</option><option value="164">صفحة 164</option><option value="165">صفحة 165</option><option value="166">صفحة 166</option><option value="167">صفحة 167</option><option value="168">صفحة 168</option><option value="169">صفحة 169</option><option value="170">صفحة 170</option><option value="171">صفحة 171</option><option value="172">صفحة 172</option><option value="173">صفحة 173</option><option value="174">صفحة 174</option><option value="175">صفحة 175</option><option value="176">صفحة 176</option><option value="177">صفحة 177</option><option value="178">صفحة 178</option><option value="179">صفحة 179</option><option value="180">صفحة 180</option><option value="181">صفحة 181</option><option value="182">صفحة 182</option><option value="183">صفحة 183</option><option value="184">صفحة 184</option><option value="185">صفحة 185</option><option value="186">صفحة 186</option><option value="187">صفحة 187</option><option value="188">صفحة 188</option><option value="189">صفحة 189</option><option value="190">صفحة 190</option><option value="191">صفحة 191</option><option value="192">صفحة 192</option><option value="193">صفحة 193</option><option value="194">صفحة 194</option><option value="195">صفحة 195</option><option value="196">صفحة 196</option><option value="197">صفحة 197</option><option value="198">صفحة 198</option><option value="199">صفحة 199</option><option value="200">صفحة 200</option><option value="201">صفحة 201</option><option value="202">صفحة 202</option><option value="203">صفحة 203</option><option value="204">صفحة 204</option><option value="205">صفحة 205</option><option value="206">صفحة 206</option><option value="207">صفحة 207</option><option value="208">صفحة 208</option><option value="209">صفحة 209</option><option value="210">صفحة 210</option><option value="211">صفحة 211</option><option value="212">صفحة 212</option><option value="213">صفحة 213</option><option value="214">صفحة 214</option><option value="215">صفحة 215</option><option value="216">صفحة 216</option><option value="217">صفحة 217</option><option value="218">صفحة 218</option><option value="219">صفحة 219</option><option value="220">صفحة 220</option><option value="221">صفحة 221</option><option value="222">صفحة 222</option><option value="223">صفحة 223</option><option value="224">صفحة 224</option><option value="225">صفحة 225</option><option value="226">صفحة 226</option><option value="227">صفحة 227</option><option value="228">صفحة 228</option><option value="229">صفحة 229</option><option value="230">صفحة 230</option><option value="231">صفحة 231</option><option value="232">صفحة 232</option><option value="233">صفحة 233</option><option value="234">صفحة 234</option><option value="235">صفحة 235</option><option value="236">صفحة 236</option><option value="237">صفحة 237</option><option value="238">صفحة 238</option><option value="239">صفحة 239</option><option value="240">صفحة 240</option><option value="241">صفحة 241</option><option value="242">صفحة 242</option><option value="243">صفحة 243</option><option value="244">صفحة 244</option><option value="245">صفحة 245</option><option value="246">صفحة 246</option><option value="247">صفحة 247</option><option value="248">صفحة 248</option><option value="249">صفحة 249</option><option value="250">صفحة 250</option><option value="251">صفحة 251</option><option value="252">صفحة 252</option><option value="253">صفحة 253</option><option value="254">صفحة 254</option><option value="255">صفحة 255</option><option value="256">صفحة 256</option><option value="257">صفحة 257</option><option value="258">صفحة 258</option><option value="259">صفحة 259</option><option value="260">صفحة 260</option><option value="261">صفحة 261</option><option value="262">صفحة 262</option><option value="263">صفحة 263</option><option value="264">صفحة 264</option><option value="265">صفحة 265</option><option value="266">صفحة 266</option><option value="267">صفحة 267</option><option value="268">صفحة 268</option><option value="269">صفحة 269</option><option value="270">صفحة 270</option><option value="271">صفحة 271</option><option value="272">صفحة 272</option><option value="273">صفحة 273</option><option value="274">صفحة 274</option><option value="275">صفحة 275</option><option value="276">صفحة 276</option><option value="277">صفحة 277</option><option value="278">صفحة 278</option><option value="279">صفحة 279</option><option value="280">صفحة 280</option><option value="281">صفحة 281</option><option value="282">صفحة 282</option><option value="283">صفحة 283</option><option value="284">صفحة 284</option><option value="285">صفحة 285</option><option value="286">صفحة 286</option><option value="287">صفحة 287</option><option value="288">صفحة 288</option><option value="289">صفحة 289</option><option value="290">صفحة 290</option><option value="291">صفحة 291</option><option value="292">صفحة 292</option><option value="293">صفحة 293</option><option value="294">صفحة 294</option><option value="295">صفحة 295</option><option value="296">صفحة 296</option><option value="297">صفحة 297</option><option value="298">صفحة 298</option><option value="299">صفحة 299</option><option value="300">صفحة 300</option><option value="301">صفحة 301</option><option value="302">صفحة 302</option><option value="303">صفحة 303</option><option value="304">صفحة 304</option><option value="305">صفحة 305</option><option value="306">صفحة 306</option><option value="307">صفحة 307</option><option value="308">صفحة 308</option><option value="309">صفحة 309</option><option value="310">صفحة 310</option><option value="311">صفحة 311</option><option value="312">صفحة 312</option><option value="313">صفحة 313</option><option value="314">صفحة 314</option><option value="315">صفحة 315</option><option value="316">صفحة 316</option><option value="317">صفحة 317</option><option value="318">صفحة 318</option><option value="319">صفحة 319</option><option value="320">صفحة 320</option><option value="321">صفحة 321</option><option value="322">صفحة 322</option><option value="323">صفحة 323</option><option value="324">صفحة 324</option><option value="325">صفحة 325</option><option value="326">صفحة 326</option><option value="327">صفحة 327</option><option value="328">صفحة 328</option><option value="329">صفحة 329</option><option value="330">صفحة 330</option><option value="331">صفحة 331</option><option value="332">صفحة 332</option><option value="333">صفحة 333</option><option value="334">صفحة 334</option><option value="335">صفحة 335</option><option value="336">صفحة 336</option><option value="337">صفحة 337</option><option value="338">صفحة 338</option><option value="339">صفحة 339</option><option value="340">صفحة 340</option><option value="341">صفحة 341</option><option value="342">صفحة 342</option><option value="343">صفحة 343</option><option value="344">صفحة 344</option><option value="345">صفحة 345</option><option value="346">صفحة 346</option><option value="347">صفحة 347</option><option value="348">صفحة 348</option><option value="349">صفحة 349</option><option value="350">صفحة 350</option><option value="351">صفحة 351</option><option value="352">صفحة 352</option><option value="353">صفحة 353</option><option value="354">صفحة 354</option><option value="355">صفحة 355</option><option value="356">صفحة 356</option><option value="357">صفحة 357</option><option value="358">صفحة 358</option><option value="359">صفحة 359</option><option value="360">صفحة 360</option><option value="361">صفحة 361</option><option value="362">صفحة 362</option><option value="363">صفحة 363</option><option value="364">صفحة 364</option><option value="365">صفحة 365</option><option value="366">صفحة 366</option><option value="367">صفحة 367</option><option value="368">صفحة 368</option><option value="369">صفحة 369</option><option value="370">صفحة 370</option><option value="371">صفحة 371</option><option value="372">صفحة 372</option><option value="373">صفحة 373</option><option value="374">صفحة 374</option><option value="375">صفحة 375</option><option value="376">صفحة 376</option><option value="377">صفحة 377</option><option value="378">صفحة 378</option><option value="379">صفحة 379</option><option value="380">صفحة 380</option><option value="381">صفحة 381</option><option value="382">صفحة 382</option><option value="383">صفحة 383</option><option value="384">صفحة 384</option><option value="385">صفحة 385</option><option value="386">صفحة 386</option><option value="387">صفحة 387</option><option value="388">صفحة 388</option><option value="389">صفحة 389</option><option value="390">صفحة 390</option><option value="391">صفحة 391</option><option value="392">صفحة 392</option><option value="393">صفحة 393</option><option value="394">صفحة 394</option><option value="395">صفحة 395</option><option value="396">صفحة 396</option><option value="397">صفحة 397</option><option value="398">صفحة 398</option><option value="399">صفحة 399</option><option value="400">صفحة 400</option><option value="401">صفحة 401</option><option value="402">صفحة 402</option><option value="403">صفحة 403</option><option value="404">صفحة 404</option><option value="405">صفحة 405</option><option value="406">صفحة 406</option><option value="407">صفحة 407</option><option value="408">صفحة 408</option><option value="409">صفحة 409</option><option value="410">صفحة 410</option><option value="411">صفحة 411</option><option value="412">صفحة 412</option><option value="413">صفحة 413</option><option value="414">صفحة 414</option><option value="415">صفحة 415</option><option value="416">صفحة 416</option><option value="417">صفحة 417</option><option value="418">صفحة 418</option><option value="419">صفحة 419</option><option value="420">صفحة 420</option><option value="421">صفحة 421</option><option value="422">صفحة 422</option><option value="423">صفحة 423</option><option value="424">صفحة 424</option><option value="425">صفحة 425</option><option value="426">صفحة 426</option><option value="427">صفحة 427</option><option value="428">صفحة 428</option><option value="429">صفحة 429</option><option value="430">صفحة 430</option><option value="431">صفحة 431</option><option value="432">صفحة 432</option><option value="433">صفحة 433</option><option value="434">صفحة 434</option><option value="435">صفحة 435</option><option value="436">صفحة 436</option><option value="437">صفحة 437</option><option value="438">صفحة 438</option><option value="439">صفحة 439</option><option value="440">صفحة 440</option><option value="441">صفحة 441</option><option value="442">صفحة 442</option><option value="443">صفحة 443</option><option value="444">صفحة 444</option><option value="445">صفحة 445</option><option value="446">صفحة 446</option><option value="447">صفحة 447</option><option value="448">صفحة 448</option><option value="449">صفحة 449</option><option value="450">صفحة 450</option><option value="451">صفحة 451</option><option value="452">صفحة 452</option><option value="453">صفحة 453</option><option value="454">صفحة 454</option><option value="455">صفحة 455</option><option value="456">صفحة 456</option><option value="457">صفحة 457</option><option value="458">صفحة 458</option><option value="459">صفحة 459</option><option value="460">صفحة 460</option><option value="461">صفحة 461</option><option value="462">صفحة 462</option><option value="463">صفحة 463</option><option value="464">صفحة 464</option><option value="465">صفحة 465</option><option value="466">صفحة 466</option><option value="467">صفحة 467</option><option value="468">صفحة 468</option><option value="469">صفحة 469</option><option value="470">صفحة 470</option><option value="471">صفحة 471</option><option value="472">صفحة 472</option><option value="473">صفحة 473</option><option value="474">صفحة 474</option><option value="475">صفحة 475</option><option value="476">صفحة 476</option><option value="477">صفحة 477</option><option value="478">صفحة 478</option><option value="479">صفحة 479</option><option value="480">صفحة 480</option><option value="481">صفحة 481</option><option value="482">صفحة 482</option><option value="483">صفحة 483</option><option value="484">صفحة 484</option><option value="485">صفحة 485</option><option value="486">صفحة 486</option><option value="487">صفحة 487</option><option value="488">صفحة 488</option><option value="489">صفحة 489</option><option value="490">صفحة 490</option><option value="491">صفحة 491</option><option value="492">صفحة 492</option><option value="493">صفحة 493</option><option value="494">صفحة 494</option><option value="495">صفحة 495</option><option value="496">صفحة 496</option><option value="497">صفحة 497</option><option value="498">صفحة 498</option><option value="499">صفحة 499</option><option value="500">صفحة 500</option><option value="501">صفحة 501</option><option value="502">صفحة 502</option><option value="503">صفحة 503</option><option value="504">صفحة 504</option><option value="505">صفحة 505</option><option value="506">صفحة 506</option><option value="507">صفحة 507</option><option value="508">صفحة 508</option><option value="509">صفحة 509</option><option value="510">صفحة 510</option><option value="511">صفحة 511</option><option value="512">صفحة 512</option><option value="513">صفحة 513</option><option value="514">صفحة 514</option><option value="515">صفحة 515</option><option value="516">صفحة 516</option><option value="517">صفحة 517</option><option value="518">صفحة 518</option><option value="519">صفحة 519</option><option value="520">صفحة 520</option><option value="521">صفحة 521</option><option value="522">صفحة 522</option><option value="523">صفحة 523</option><option value="524">صفحة 524</option><option value="525">صفحة 525</option><option value="526">صفحة 526</option><option value="527">صفحة 527</option><option value="528">صفحة 528</option><option value="529">صفحة 529</option><option value="530">صفحة 530</option><option value="531">صفحة 531</option><option value="532">صفحة 532</option><option value="533">صفحة 533</option><option value="534">صفحة 534</option><option value="535">صفحة 535</option><option value="536">صفحة 536</option><option value="537">صفحة 537</option><option value="538">صفحة 538</option><option value="539">صفحة 539</option><option value="540">صفحة 540</option><option value="541">صفحة 541</option><option value="542">صفحة 542</option><option value="543">صفحة 543</option><option value="544">صفحة 544</option><option value="545">صفحة 545</option><option value="546">صفحة 546</option><option value="547">صفحة 547</option><option value="548">صفحة 548</option><option value="549">صفحة 549</option><option value="550">صفحة 550</option><option value="551">صفحة 551</option><option value="552">صفحة 552</option><option value="553">صفحة 553</option><option value="554">صفحة 554</option><option value="555">صفحة 555</option><option value="556">صفحة 556</option><option value="557">صفحة 557</option><option value="558">صفحة 558</option><option value="559">صفحة 559</option><option value="560">صفحة 560</option><option value="561">صفحة 561</option><option value="562">صفحة 562</option><option value="563">صفحة 563</option><option value="564">صفحة 564</option><option value="565">صفحة 565</option><option value="566">صفحة 566</option><option value="567">صفحة 567</option><option value="568">صفحة 568</option><option value="569">صفحة 569</option><option value="570">صفحة 570</option><option value="571">صفحة 571</option><option value="572">صفحة 572</option><option value="573">صفحة 573</option><option value="574">صفحة 574</option><option value="575">صفحة 575</option><option value="576">صفحة 576</option><option value="577">صفحة 577</option><option value="578">صفحة 578</option><option value="579">صفحة 579</option><option value="580">صفحة 580</option><option value="581">صفحة 581</option><option value="582">صفحة 582</option><option value="583">صفحة 583</option><option value="584">صفحة 584</option><option value="585">صفحة 585</option><option value="586">صفحة 586</option><option value="587">صفحة 587</option><option value="588">صفحة 588</option><option value="589">صفحة 589</option><option value="590">صفحة 590</option><option value="591">صفحة 591</option><option value="592">صفحة 592</option><option value="593">صفحة 593</option><option value="594">صفحة 594</option><option value="595">صفحة 595</option><option value="596">صفحة 596</option><option value="597">صفحة 597</option><option value="598">صفحة 598</option><option value="599">صفحة 599</option><option value="600">صفحة 600</option><option value="601">صفحة 601</option><option value="602">صفحة 602</option><option value="603">صفحة 603</option><option value="604">صفحة 604</option></select>
+        </div>
+
+        <div id="surah-list" class="surah-list" style="display: none;">
+            <!-- سيتم ملؤها بالجافاسكريبت -->
+        <div class="surah-card">
+                    <h3>الفاتحة</h3>
+                    <p>عدد الآيات: 7</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>البقرة</h3>
+                    <p>عدد الآيات: 286</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>آل عمران</h3>
+                    <p>عدد الآيات: 200</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>النساء</h3>
+                    <p>عدد الآيات: 176</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المائدة</h3>
+                    <p>عدد الآيات: 120</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الأنعام</h3>
+                    <p>عدد الآيات: 165</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأعراف</h3>
+                    <p>عدد الآيات: 206</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأنفال</h3>
+                    <p>عدد الآيات: 75</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>التوبة</h3>
+                    <p>عدد الآيات: 129</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>يونس</h3>
+                    <p>عدد الآيات: 109</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>هود</h3>
+                    <p>عدد الآيات: 123</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>يوسف</h3>
+                    <p>عدد الآيات: 111</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الرعد</h3>
+                    <p>عدد الآيات: 43</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>إبراهيم</h3>
+                    <p>عدد الآيات: 52</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الحجر</h3>
+                    <p>عدد الآيات: 99</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النحل</h3>
+                    <p>عدد الآيات: 128</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الإسراء</h3>
+                    <p>عدد الآيات: 111</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الكهف</h3>
+                    <p>عدد الآيات: 110</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>مريم</h3>
+                    <p>عدد الآيات: 98</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>طه</h3>
+                    <p>عدد الآيات: 135</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأنبياء</h3>
+                    <p>عدد الآيات: 112</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الحج</h3>
+                    <p>عدد الآيات: 78</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المؤمنون</h3>
+                    <p>عدد الآيات: 118</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النور</h3>
+                    <p>عدد الآيات: 64</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الفرقان</h3>
+                    <p>عدد الآيات: 77</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الشعراء</h3>
+                    <p>عدد الآيات: 227</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النمل</h3>
+                    <p>عدد الآيات: 93</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القصص</h3>
+                    <p>عدد الآيات: 88</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>العنكبوت</h3>
+                    <p>عدد الآيات: 69</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الروم</h3>
+                    <p>عدد الآيات: 60</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>لقمان</h3>
+                    <p>عدد الآيات: 34</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>السجدة</h3>
+                    <p>عدد الآيات: 30</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأحزاب</h3>
+                    <p>عدد الآيات: 73</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>سبأ</h3>
+                    <p>عدد الآيات: 54</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>فاطر</h3>
+                    <p>عدد الآيات: 45</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>يس</h3>
+                    <p>عدد الآيات: 83</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الصافات</h3>
+                    <p>عدد الآيات: 182</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>ص</h3>
+                    <p>عدد الآيات: 88</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الزمر</h3>
+                    <p>عدد الآيات: 75</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>غافر</h3>
+                    <p>عدد الآيات: 85</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>فصلت</h3>
+                    <p>عدد الآيات: 54</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الشورى</h3>
+                    <p>عدد الآيات: 53</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الزخرف</h3>
+                    <p>عدد الآيات: 89</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الدخان</h3>
+                    <p>عدد الآيات: 59</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الجاثية</h3>
+                    <p>عدد الآيات: 37</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأحقاف</h3>
+                    <p>عدد الآيات: 35</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>محمد</h3>
+                    <p>عدد الآيات: 38</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الفتح</h3>
+                    <p>عدد الآيات: 29</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الحجرات</h3>
+                    <p>عدد الآيات: 18</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>ق</h3>
+                    <p>عدد الآيات: 45</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الذاريات</h3>
+                    <p>عدد الآيات: 60</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الطور</h3>
+                    <p>عدد الآيات: 49</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النجم</h3>
+                    <p>عدد الآيات: 62</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القمر</h3>
+                    <p>عدد الآيات: 55</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الرحمن</h3>
+                    <p>عدد الآيات: 78</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الواقعة</h3>
+                    <p>عدد الآيات: 96</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الحديد</h3>
+                    <p>عدد الآيات: 29</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المجادلة</h3>
+                    <p>عدد الآيات: 22</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الحشر</h3>
+                    <p>عدد الآيات: 24</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الممتحنة</h3>
+                    <p>عدد الآيات: 13</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الصف</h3>
+                    <p>عدد الآيات: 14</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الجمعة</h3>
+                    <p>عدد الآيات: 11</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المنافقون</h3>
+                    <p>عدد الآيات: 11</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>التغابن</h3>
+                    <p>عدد الآيات: 18</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الطلاق</h3>
+                    <p>عدد الآيات: 12</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>التحريم</h3>
+                    <p>عدد الآيات: 12</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الملك</h3>
+                    <p>عدد الآيات: 30</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القلم</h3>
+                    <p>عدد الآيات: 52</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الحاقة</h3>
+                    <p>عدد الآيات: 52</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>المعارج</h3>
+                    <p>عدد الآيات: 44</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>نوح</h3>
+                    <p>عدد الآيات: 28</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الجن</h3>
+                    <p>عدد الآيات: 28</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>المزمل</h3>
+                    <p>عدد الآيات: 20</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>المدثر</h3>
+                    <p>عدد الآيات: 56</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القيامة</h3>
+                    <p>عدد الآيات: 40</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الإنسان</h3>
+                    <p>عدد الآيات: 31</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المرسلات</h3>
+                    <p>عدد الآيات: 50</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النبأ</h3>
+                    <p>عدد الآيات: 40</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النازعات</h3>
+                    <p>عدد الآيات: 46</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>عبس</h3>
+                    <p>عدد الآيات: 42</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>التكوير</h3>
+                    <p>عدد الآيات: 29</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الانفطار</h3>
+                    <p>عدد الآيات: 19</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>المطففين</h3>
+                    <p>عدد الآيات: 36</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الانشقاق</h3>
+                    <p>عدد الآيات: 25</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>البروج</h3>
+                    <p>عدد الآيات: 22</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الطارق</h3>
+                    <p>عدد الآيات: 17</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الأعلى</h3>
+                    <p>عدد الآيات: 19</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الغاشية</h3>
+                    <p>عدد الآيات: 26</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الفجر</h3>
+                    <p>عدد الآيات: 30</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>البلد</h3>
+                    <p>عدد الآيات: 20</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الشمس</h3>
+                    <p>عدد الآيات: 15</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الليل</h3>
+                    <p>عدد الآيات: 21</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الضحى</h3>
+                    <p>عدد الآيات: 11</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الشرح</h3>
+                    <p>عدد الآيات: 8</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>التين</h3>
+                    <p>عدد الآيات: 8</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>العلق</h3>
+                    <p>عدد الآيات: 19</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القدر</h3>
+                    <p>عدد الآيات: 5</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>البينة</h3>
+                    <p>عدد الآيات: 8</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>الزلزلة</h3>
+                    <p>عدد الآيات: 8</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>العاديات</h3>
+                    <p>عدد الآيات: 11</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>القارعة</h3>
+                    <p>عدد الآيات: 11</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>التكاثر</h3>
+                    <p>عدد الآيات: 8</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>العصر</h3>
+                    <p>عدد الآيات: 3</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الهمزة</h3>
+                    <p>عدد الآيات: 9</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الفيل</h3>
+                    <p>عدد الآيات: 5</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>قريش</h3>
+                    <p>عدد الآيات: 4</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الماعون</h3>
+                    <p>عدد الآيات: 7</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الكوثر</h3>
+                    <p>عدد الآيات: 3</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الكافرون</h3>
+                    <p>عدد الآيات: 6</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>النصر</h3>
+                    <p>عدد الآيات: 3</p>
+                    <p>مدنية</p>
+                </div><div class="surah-card">
+                    <h3>المسد</h3>
+                    <p>عدد الآيات: 5</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الإخلاص</h3>
+                    <p>عدد الآيات: 4</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الفلق</h3>
+                    <p>عدد الآيات: 5</p>
+                    <p>مكية</p>
+                </div><div class="surah-card">
+                    <h3>الناس</h3>
+                    <p>عدد الآيات: 6</p>
+                    <p>مكية</p>
+                </div></div>
+
+        <div id="quran-container" class="quran-container" style="display: block;">
+            <div class="surah-header">
+                <h1 class="surah-title" id="surah-title">سورة الفاتحة</h1>
+                <p class="surah-info" id="surah-info">مكية - 7 آية</p>
+            </div>
+
+            <div class="bismillah" id="bismillah" style="display: block;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>
+
+            <div class="ayat" id="ayat-container"><span class="ayah">بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ </span><span class="ayah-number">﴿1﴾</span><span class="ayah">ٱلۡحَمۡدُ لِلَّهِ رَبِّ ٱلۡعَٰلَمِينَ </span><span class="ayah-number">﴿2﴾</span><span class="ayah">ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ </span><span class="ayah-number">﴿3﴾</span><span class="ayah">مَٰلِكِ يَوۡمِ ٱلدِّينِ </span><span class="ayah-number">﴿4﴾</span><span class="ayah">إِيَّاكَ نَعۡبُدُ وَإِيَّاكَ نَسۡتَعِينُ </span><span class="ayah-number">﴿5﴾</span><span class="ayah">ٱهۡدِنَا ٱلصِّرَٰطَ ٱلۡمُسۡتَقِيمَ </span><span class="ayah-number">﴿6﴾</span><span class="ayah">صِرَٰطَ ٱلَّذِينَ أَنۡعَمۡتَ عَلَيۡهِمۡ غَيۡرِ ٱلۡمَغۡضُوبِ عَلَيۡهِمۡ وَلَا ٱلضَّآلِّينَ </span><span class="ayah-number">﴿7﴾</span></div>
+
+            <div class="page-navigation">
+                <button id="prev-surah" disabled="">السورة السابقة</button>
+                <div class="page-info" id="page-info">سورة الفاتحة (1/114)</div>
+                <button id="next-surah">السورة التالية</button>
+            </div>
+        </div>
+
+        <div class="memorization-tools">
+            <h2>أدوات الحفظ</h2>
+            <div class="tool-buttons">
+                <button class="tool-button" id="repeat-button">تكرار الآية</button>
+                <button class="tool-button" id="hide-button">إخفاء الآيات</button>
+                <button class="tool-button" id="test-button">اختبار الحفظ</button>
+                <button class="tool-button" id="bookmark-button">وضع علامة</button>
+            </div>
+        </div>
+    </div>
+
+    
+
+    <script>
+        // بيانات السور الكاملة للقرآن الكريم
+        const surahs = [
+            { number: 1, name: "الفاتحة", ayahs: 7, type: "مكية" },
+            { number: 2, name: "البقرة", ayahs: 286, type: "مدنية" },
+            { number: 3, name: "آل عمران", ayahs: 200, type: "مدنية" },
+            { number: 4, name: "النساء", ayahs: 176, type: "مدنية" },
+            { number: 5, name: "المائدة", ayahs: 120, type: "مدنية" },
+            { number: 6, name: "الأنعام", ayahs: 165, type: "مكية" },
+            { number: 7, name: "الأعراف", ayahs: 206, type: "مكية" },
+            { number: 8, name: "الأنفال", ayahs: 75, type: "مدنية" },
+            { number: 9, name: "التوبة", ayahs: 129, type: "مدنية" },
+            { number: 10, name: "يونس", ayahs: 109, type: "مكية" },
+            { number: 11, name: "هود", ayahs: 123, type: "مكية" },
+            { number: 12, name: "يوسف", ayahs: 111, type: "مكية" },
+            { number: 13, name: "الرعد", ayahs: 43, type: "مدنية" },
+            { number: 14, name: "إبراهيم", ayahs: 52, type: "مكية" },
+            { number: 15, name: "الحجر", ayahs: 99, type: "مكية" },
+            { number: 16, name: "النحل", ayahs: 128, type: "مكية" },
+            { number: 17, name: "الإسراء", ayahs: 111, type: "مكية" },
+            { number: 18, name: "الكهف", ayahs: 110, type: "مكية" },
+            { number: 19, name: "مريم", ayahs: 98, type: "مكية" },
+            { number: 20, name: "طه", ayahs: 135, type: "مكية" },
+            { number: 21, name: "الأنبياء", ayahs: 112, type: "مكية" },
+            { number: 22, name: "الحج", ayahs: 78, type: "مدنية" },
+            { number: 23, name: "المؤمنون", ayahs: 118, type: "مكية" },
+            { number: 24, name: "النور", ayahs: 64, type: "مدنية" },
+            { number: 25, name: "الفرقان", ayahs: 77, type: "مكية" },
+            { number: 26, name: "الشعراء", ayahs: 227, type: "مكية" },
+            { number: 27, name: "النمل", ayahs: 93, type: "مكية" },
+            { number: 28, name: "القصص", ayahs: 88, type: "مكية" },
+            { number: 29, name: "العنكبوت", ayahs: 69, type: "مكية" },
+            { number: 30, name: "الروم", ayahs: 60, type: "مكية" },
+            { number: 31, name: "لقمان", ayahs: 34, type: "مكية" },
+            { number: 32, name: "السجدة", ayahs: 30, type: "مكية" },
+            { number: 33, name: "الأحزاب", ayahs: 73, type: "مدنية" },
+            { number: 34, name: "سبأ", ayahs: 54, type: "مكية" },
+            { number: 35, name: "فاطر", ayahs: 45, type: "مكية" },
+            { number: 36, name: "يس", ayahs: 83, type: "مكية" },
+            { number: 37, name: "الصافات", ayahs: 182, type: "مكية" },
+            { number: 38, name: "ص", ayahs: 88, type: "مكية" },
+            { number: 39, name: "الزمر", ayahs: 75, type: "مكية" },
+            { number: 40, name: "غافر", ayahs: 85, type: "مكية" },
+            { number: 41, name: "فصلت", ayahs: 54, type: "مكية" },
+            { number: 42, name: "الشورى", ayahs: 53, type: "مكية" },
+            { number: 43, name: "الزخرف", ayahs: 89, type: "مكية" },
+            { number: 44, name: "الدخان", ayahs: 59, type: "مكية" },
+            { number: 45, name: "الجاثية", ayahs: 37, type: "مكية" },
+            { number: 46, name: "الأحقاف", ayahs: 35, type: "مكية" },
+            { number: 47, name: "محمد", ayahs: 38, type: "مدنية" },
+            { number: 48, name: "الفتح", ayahs: 29, type: "مدنية" },
+            { number: 49, name: "الحجرات", ayahs: 18, type: "مدنية" },
+            { number: 50, name: "ق", ayahs: 45, type: "مكية" },
+            { number: 51, name: "الذاريات", ayahs: 60, type: "مكية" },
+            { number: 52, name: "الطور", ayahs: 49, type: "مكية" },
+            { number: 53, name: "النجم", ayahs: 62, type: "مكية" },
+            { number: 54, name: "القمر", ayahs: 55, type: "مكية" },
+            { number: 55, name: "الرحمن", ayahs: 78, type: "مدنية" },
+            { number: 56, name: "الواقعة", ayahs: 96, type: "مكية" },
+            { number: 57, name: "الحديد", ayahs: 29, type: "مدنية" },
+            { number: 58, name: "المجادلة", ayahs: 22, type: "مدنية" },
+            { number: 59, name: "الحشر", ayahs: 24, type: "مدنية" },
+            { number: 60, name: "الممتحنة", ayahs: 13, type: "مدنية" },
+            { number: 61, name: "الصف", ayahs: 14, type: "مدنية" },
+            { number: 62, name: "الجمعة", ayahs: 11, type: "مدنية" },
+            { number: 63, name: "المنافقون", ayahs: 11, type: "مدنية" },
+            { number: 64, name: "التغابن", ayahs: 18, type: "مدنية" },
+            { number: 65, name: "الطلاق", ayahs: 12, type: "مدنية" },
+            { number: 66, name: "التحريم", ayahs: 12, type: "مدنية" },
+            { number: 67, name: "الملك", ayahs: 30, type: "مكية" },
+            { number: 68, name: "القلم", ayahs: 52, type: "مكية" },
+            { number: 69, name: "الحاقة", ayahs: 52, type: "مكية" },
+            { number: 70, name: "المعارج", ayahs: 44, type: "مكية" },
+            { number: 71, name: "نوح", ayahs: 28, type: "مكية" },
+            { number: 72, name: "الجن", ayahs: 28, type: "مكية" },
+            { number: 73, name: "المزمل", ayahs: 20, type: "مكية" },
+            { number: 74, name: "المدثر", ayahs: 56, type: "مكية" },
+            { number: 75, name: "القيامة", ayahs: 40, type: "مكية" },
+            { number: 76, name: "الإنسان", ayahs: 31, type: "مدنية" },
+            { number: 77, name: "المرسلات", ayahs: 50, type: "مكية" },
+            { number: 78, name: "النبأ", ayahs: 40, type: "مكية" },
+            { number: 79, name: "النازعات", ayahs: 46, type: "مكية" },
+            { number: 80, name: "عبس", ayahs: 42, type: "مكية" },
+            { number: 81, name: "التكوير", ayahs: 29, type: "مكية" },
+            { number: 82, name: "الانفطار", ayahs: 19, type: "مكية" },
+            { number: 83, name: "المطففين", ayahs: 36, type: "مكية" },
+            { number: 84, name: "الانشقاق", ayahs: 25, type: "مكية" },
+            { number: 85, name: "البروج", ayahs: 22, type: "مكية" },
+            { number: 86, name: "الطارق", ayahs: 17, type: "مكية" },
+            { number: 87, name: "الأعلى", ayahs: 19, type: "مكية" },
+            { number: 88, name: "الغاشية", ayahs: 26, type: "مكية" },
+            { number: 89, name: "الفجر", ayahs: 30, type: "مكية" },
+            { number: 90, name: "البلد", ayahs: 20, type: "مكية" },
+            { number: 91, name: "الشمس", ayahs: 15, type: "مكية" },
+            { number: 92, name: "الليل", ayahs: 21, type: "مكية" },
+            { number: 93, name: "الضحى", ayahs: 11, type: "مكية" },
+            { number: 94, name: "الشرح", ayahs: 8, type: "مكية" },
+            { number: 95, name: "التين", ayahs: 8, type: "مكية" },
+            { number: 96, name: "العلق", ayahs: 19, type: "مكية" },
+            { number: 97, name: "القدر", ayahs: 5, type: "مكية" },
+            { number: 98, name: "البينة", ayahs: 8, type: "مدنية" },
+            { number: 99, name: "الزلزلة", ayahs: 8, type: "مدنية" },
+            { number: 100, name: "العاديات", ayahs: 11, type: "مكية" },
+            { number: 101, name: "القارعة", ayahs: 11, type: "مكية" },
+            { number: 102, name: "التكاثر", ayahs: 8, type: "مكية" },
+            { number: 103, name: "العصر", ayahs: 3, type: "مكية" },
+            { number: 104, name: "الهمزة", ayahs: 9, type: "مكية" },
+            { number: 105, name: "الفيل", ayahs: 5, type: "مكية" },
+            { number: 106, name: "قريش", ayahs: 4, type: "مكية" },
+            { number: 107, name: "الماعون", ayahs: 7, type: "مكية" },
+            { number: 108, name: "الكوثر", ayahs: 3, type: "مكية" },
+            { number: 109, name: "الكافرون", ayahs: 6, type: "مكية" },
+            { number: 110, name: "النصر", ayahs: 3, type: "مدنية" },
+            { number: 111, name: "المسد", ayahs: 5, type: "مكية" },
+            { number: 112, name: "الإخلاص", ayahs: 4, type: "مكية" },
+            { number: 113, name: "الفلق", ayahs: 5, type: "مكية" },
+            { number: 114, name: "الناس", ayahs: 6, type: "مكية" }
+        ];
+
+        // نص سورة الفاتحة كمثال
+        const surah1 = [
+            "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+            "الرَّحْمَٰنِ الرَّحِيمِ",
+            "مَالِكِ يَوْمِ الدِّينِ",
+            "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+            "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+            "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ"
+        ];
+
+        // نص سورة الإخلاص كمثال
+        const surah112 = [
+            "قُلْ هُوَ اللَّهُ أَحَدٌ",
+            "اللَّهُ الصَّمَدُ",
+            "لَمْ يَلِدْ وَلَمْ يُولَدْ",
+            "وَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ"
+        ];
+
+        // متغير لتخزين نصوص القرآن الكريم كاملة
+        let quranText = null;
+
+        // دالة لتحميل نصوص القرآن الكريم من CDN
+        async function loadQuranText() {
+            try {
+                const response = await fetch('https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json');
+                quranText = await response.json();
+                console.log('تم تحميل نصوص القرآن الكريم بنجاح');
+                // تحميل سورة الفاتحة بعد تحميل النصوص
+                loadSurah(1);
+            } catch (error) {
+                console.error('حدث خطأ أثناء تحميل نصوص القرآن الكريم:', error);
+                // استخدام النصوص المحلية في حالة فشل التحميل
+                loadSurah(1);
+            }
+        }
+
+        // إعداد الصفحة عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            // إعداد قائمة السور
+            const surahSelect = document.getElementById('surah-select');
+            const surahList = document.getElementById('surah-list');
+            
+            // ملء قائمة السور
+            surahs.forEach(surah => {
+                // إضافة للقائمة المنسدلة
+                const option = document.createElement('option');
+                option.value = surah.number;
+                option.textContent = `${surah.number}. ${surah.name}`;
+                surahSelect.appendChild(option);
+                
+                // إضافة بطاقة السورة
+                const card = document.createElement('div');
+                card.className = 'surah-card';
+                card.innerHTML = `
+                    <h3>${surah.name}</h3>
+                    <p>عدد الآيات: ${surah.ayahs}</p>
+                    <p>${surah.type}</p>
+                `;
+                card.addEventListener('click', () => loadSurah(surah.number));
+                surahList.appendChild(card);
+            });
+            
+            // ملء قائمة الأجزاء
+            const juzSelect = document.getElementById('juz-select');
+            for (let i = 1; i <= 30; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `الجزء ${i}`;
+                juzSelect.appendChild(option);
+            }
+            
+            // ملء قائمة الصفحات
+            const pageSelect = document.getElementById('page-select');
+            for (let i = 1; i <= 604; i++) {
+                const option = document.createElement('option');
+                option.value = i;
+                option.textContent = `صفحة ${i}`;
+                pageSelect.appendChild(option);
+            }
+            
+            // تحميل نصوص القرآن الكريم
+            loadQuranText();
+            
+            // إعداد مستمعي الأحداث
+            surahSelect.addEventListener('change', function() {
+                if (this.value) {
+                    loadSurah(parseInt(this.value));
+                }
+            });
+            
+            document.getElementById('prev-surah').addEventListener('click', function() {
+                const currentSurah = parseInt(surahSelect.value);
+                if (currentSurah > 1) {
+                    loadSurah(currentSurah - 1);
+                    surahSelect.value = currentSurah - 1;
+                }
+            });
+            
+            document.getElementById('next-surah').addEventListener('click', function() {
+                const currentSurah = parseInt(surahSelect.value);
+                if (currentSurah < surahs.length) {
+                    loadSurah(currentSurah + 1);
+                    surahSelect.value = currentSurah + 1;
+                }
+            });
+            
+            // إعداد زر تبديل السمة
+            const themeToggle = document.getElementById('theme-toggle');
+            themeToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    document.documentElement.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    document.documentElement.removeAttribute('data-theme');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+            
+            // تحقق من السمة المحفوظة
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                themeToggle.checked = true;
+            }
+            
+            // إعداد أدوات الحفظ
+            document.getElementById('repeat-button').addEventListener('click', function() {
+                alert('تم تفعيل وضع التكرار. انقر على آية لتكرارها.');
+                // هنا يمكن إضافة منطق التكرار الفعلي
+            });
+            
+            document.getElementById('hide-button').addEventListener('click', function() {
+                const ayatContainer = document.getElementById('ayat-container');
+                const ayat = ayatContainer.querySelectorAll('.ayah');
+                ayat.forEach(ayah => {
+                    ayah.style.color = ayah.style.color === 'transparent' ? '' : 'transparent';
+                });
+            });
+            
+            document.getElementById('test-button').addEventListener('click', function() {
+                alert('سيتم تفعيل وضع الاختبار قريبًا');
+                // هنا يمكن إضافة منطق الاختبار
+            });
+            
+            document.getElementById('bookmark-button').addEventListener('click', function() {
+                const currentSurah = parseInt(surahSelect.value);
+                alert(`تم وضع علامة على السورة ${surahs[currentSurah-1].name}`);
+                // هنا يمكن إضافة منطق حفظ العلامة
+            });
+            
+            // إعداد البحث
+            document.getElementById('search-button').addEventListener('click', function() {
+                const searchTerm = document.getElementById('search-input').value.trim();
+                if (searchTerm) {
+                    alert(`جاري البحث عن: ${searchTerm}`);
+                    // هنا يمكن إضافة منطق البحث الفعلي
+                }
+            });
+            
+            // تحديث السنة في التذييل
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+        
+        // دالة تحميل السورة
+        function loadSurah(surahNumber) {
+            // في التطبيق الحقيقي، ستقوم بتحميل بيانات السورة من API أو ملف JSON
+            const surah = surahs[surahNumber - 1];
+            
+            // عرض معلومات السورة
+            document.getElementById('surah-title').textContent = `سورة ${surah.name}`;
+            document.getElementById('surah-info').textContent = `${surah.type} - ${surah.ayahs} آية`;
+            
+            // إخفاء البسملة لسورة التوبة
+            document.getElementById('bismillah').style.display = surahNumber === 9 ? 'none' : 'block';
+            
+            // عرض الآيات
+            const ayatContainer = document.getElementById('ayat-container');
+            ayatContainer.innerHTML = '';
+            
+            // استخدام نصوص القرآن من API إذا كانت متاحة
+            let ayatText = [];
+            
+            if (quranText && quranText[surahNumber - 1] && quranText[surahNumber - 1].verses) {
+                // استخدام النصوص من API
+                ayatText = quranText[surahNumber - 1].verses.map(verse => verse.text);
+            } else {
+                // استخدام النصوص المحلية كاحتياطي
+                if (surahNumber === 1) {
+                    ayatText = surah1;
+                } else if (surahNumber === 112) {
+                    ayatText = surah112;
+                } else {
+                    // في حالة عدم توفر نص السورة، نعرض رسالة
+                    ayatText = [`هذا مثال للآيات. في التطبيق الكامل، ستظهر هنا الآيات الحقيقية للسورة ${surah.name}.`];
+                }
+            }
+            
+            ayatText.forEach((ayah, index) => {
+                const ayahSpan = document.createElement('span');
+                ayahSpan.className = 'ayah';
+                ayahSpan.textContent = ayah + ' ';
+                ayahSpan.addEventListener('click', function() {
+                    // يمكن إضافة وظائف تفاعلية عند النقر على الآية
+                    this.style.backgroundColor = 'var(--primary-color)';
+                    this.style.color = 'white';
+                    setTimeout(() => {
+                        this.style.backgroundColor = '';
+                        this.style.color = '';
+                    }, 1000);
+                });
+                
+                const ayahNumber = document.createElement('span');
+                ayahNumber.className = 'ayah-number';
+                ayahNumber.textContent = `﴿${index + 1}﴾`;
+                
+                ayatContainer.appendChild(ayahSpan);
+                ayatContainer.appendChild(ayahNumber);
+            });
+            
+            // تحديث معلومات الصفحة
+            document.getElementById('page-info').textContent = `سورة ${surah.name} (${surah.number}/${surahs.length})`;
+            
+            // تفعيل/تعطيل أزرار التنقل
+            document.getElementById('prev-surah').disabled = surahNumber === 1;
+            document.getElementById('next-surah').disabled = surahNumber === surahs.length;
+            
+            // إظهار حاوية القرآن وإخفاء قائمة السور
+            document.getElementById('quran-container').style.display = 'block';
+            document.getElementById('surah-list').style.display = 'none';
+        }
+    </script>
+
+
+</body></html>
